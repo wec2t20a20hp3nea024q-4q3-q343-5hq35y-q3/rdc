@@ -1,4 +1,4 @@
-// planning-data.js - Subject / Topic / Exercise structure
+// planning-data.js - Subject / Topic / Exercise structure (unique IDs)
 
 const PLANNING_DATA = [
   {
@@ -9,7 +9,7 @@ const PLANNING_DATA = [
       {
         id: 'wmp',
         code: 'MOCKPAPER 1',
-        name: 'Mock Paper 1',           // optional, not displayed but kept for consistency
+        name: 'Mock Paper 1',
         exercises: [
           { id: '1A1', code: '1A1', fullMark: 105 },
           { id: '2A1', code: '2A1', fullMark: 105 },
@@ -65,7 +65,7 @@ const PLANNING_DATA = [
           { id: '1A2', code: '1A2', fullMark: 45 },
           { id: '2A2', code: '2A2', fullMark: 45 },
           { id: '3A2', code: '3A2', fullMark: 45 },
-          { id: '3A2dup', code: '3A2', fullMark: 45 },  // duplicate code kept with unique id to avoid collisions; you may adjust if unintended
+          { id: '3B2', code: '3B2', fullMark: 45 },
           { id: '4A2', code: '4A2', fullMark: 45 },
           { id: '4B2', code: '4B2', fullMark: 45 },
           { id: '5A2', code: '5A2', fullMark: 45 },
@@ -107,7 +107,7 @@ const PLANNING_DATA = [
           { id: 'PM10-2', code: 'PM10-2', fullMark: 45 },
           { id: 'PM11-2', code: 'PM11-2', fullMark: 45 }
         ]
-      },
+      }
     ]
   },
   {
@@ -116,172 +116,170 @@ const PLANNING_DATA = [
     name: 'Physics',
     topics: [
       {
-        id: 'mech',
+        id: 'book1t1',
         code: 'BOOK1T1',
-        name: 'Mechanics',
+        name: '///',
         exercises: [
           { id: 'Notes', code: 'Notes', fullMark: 100 },
           { id: 'Classwork', code: 'Classwork', fullMark: 100 },
-          { id: 'DSEMC', code: 'DSEMC', fullMark:100},
-          { id: 'DSELQ', code: 'DSELQ', fullMark:70}
+          { id: 'DSEMC', code: 'DSEMC', fullMark: 100 },
+          { id: 'DSELQ', code: 'DSELQ', fullMark: 70 }
         ]
       },
       {
-        id: 'mech',
+        id: 'book2t2',
         code: 'BOOK2T2',
-        name: 'Mechanics',
+        name: '///',
         exercises: [
           { id: 'Notes', code: 'Notes', fullMark: 100 },
           { id: 'Classwork', code: 'Classwork', fullMark: 100 },
-          { id: 'DSEMC', code: 'DSEMC', fullMark:95},
-          { id: 'DSELQ', code: 'DSELQ', fullMark:169}
+          { id: 'DSEMC', code: 'DSEMC', fullMark: 95 },
+          { id: 'DSELQ', code: 'DSELQ', fullMark: 169 }
         ]
       },
       {
-        id: 'mech',
+        id: 'book2t3',
         code: 'BOOK2T3',
-        name: 'Mechanics',
+        name: '///',
         exercises: [
           { id: 'Notes', code: 'Notes', fullMark: 100 },
           { id: 'Classwork', code: 'Classwork', fullMark: 100 },
-          { id: 'DSEMC', code: 'DSEMC', fullMark:161},
-          { id: 'DSELQ', code: 'DSELQ', fullMark:136}
+          { id: 'DSEMC', code: 'DSEMC', fullMark: 161 },
+          { id: 'DSELQ', code: 'DSELQ', fullMark: 136 }
         ]
       },
       {
-        id: 'mech',
+        id: 'book2t4',
         code: 'BOOK2T4',
-        name: 'Mechanics',
+        name: '///',
         exercises: [
           { id: 'Notes', code: 'Notes', fullMark: 100 },
           { id: 'Classwork', code: 'Classwork', fullMark: 100 },
-          { id: 'DSEMC', code: 'DSEMC', fullMark:97},
-          { id: 'DSELQ', code: 'DSELQ', fullMark:341}
+          { id: 'DSEMC', code: 'DSEMC', fullMark: 97 },
+          { id: 'DSELQ', code: 'DSELQ', fullMark: 341 }
         ]
       },
       {
-        id: 'mech',
+        id: 'book2t5',
         code: 'BOOK2T5',
-        name: 'Mechanics',
+        name: '///',
         exercises: [
           { id: 'Notes', code: 'Notes', fullMark: 100 },
           { id: 'Classwork', code: 'Classwork', fullMark: 100 },
-          { id: 'DSEMC', code: 'DSEMC', fullMark:113},
-          { id: 'DSELQ', code: 'DSELQ', fullMark:333}
+          { id: 'DSEMC', code: 'DSEMC', fullMark: 113 },
+          { id: 'DSELQ', code: 'DSELQ', fullMark: 333 }
         ]
       },
       {
-        id: 'mech',
+        id: 'book2t6',
         code: 'BOOK2T6',
-        name: 'Mechanics',
+        name: '///',
         exercises: [
           { id: 'Notes', code: 'Notes', fullMark: 100 },
           { id: 'Classwork', code: 'Classwork', fullMark: 100 },
-          { id: 'DSEMC', code: 'DSEMC', fullMark:30},
-          { id: 'DSELQ', code: 'DSELQ', fullMark:100}
+          { id: 'DSEMC', code: 'DSEMC', fullMark: 30 },
+          { id: 'DSELQ', code: 'DSELQ', fullMark: 100 }
         ]
       },
       {
-        id: 'mech',
+        id: 'book2t7',
         code: 'BOOK2T7',
-        name: 'Mechanics',
+        name: '///',
         exercises: [
           { id: 'Notes', code: 'Notes', fullMark: 100 },
           { id: 'Classwork', code: 'Classwork', fullMark: 100 },
-          { id: 'DSEMC', code: 'DSEMC', fullMark:27},
-          { id: 'DSELQ', code: 'DSELQ', fullMark:62}
+          { id: 'DSEMC', code: 'DSEMC', fullMark: 27 },
+          { id: 'DSELQ', code: 'DSELQ', fullMark: 62 }
         ]
       },
       {
-        id: 'mech',
+        id: 'book2t8',
         code: 'BOOK2T8',
-        name: 'Mechanics',
+        name: '///',
         exercises: [
           { id: 'Notes', code: 'Notes', fullMark: 100 },
           { id: 'Classwork', code: 'Classwork', fullMark: 100 },
-          { id: 'DSEMC', code: 'DSEMC', fullMark:38},
-          { id: 'DSELQ', code: 'DSELQ', fullMark:73}
+          { id: 'DSEMC', code: 'DSEMC', fullMark: 38 },
+          { id: 'DSELQ', code: 'DSELQ', fullMark: 73 }
         ]
       },
       {
-        id: 'mech',
+        id: 'book3t1',
         code: 'BOOK3T1',
-        name: 'Wave',
+        name: 'Basic properties of wave',
         exercises: [
           { id: 'Notes', code: 'Notes', fullMark: 100 },
           { id: 'Classwork', code: 'Classwork', fullMark: 100 },
-          { id: 'DSEMC', code: 'DSEMC', fullMark:68},
-          { id: 'DSELQ', code: 'DSELQ', fullMark:45}
+          { id: 'DSEMC', code: 'DSEMC', fullMark: 68 },
+          { id: 'DSELQ', code: 'DSELQ', fullMark: 45 }
         ]
       },
-      
       {
-        id: 'mech',
+        id: 'book3t2',
         code: 'BOOK3T2',
-        name: 'Wave',
+        name: 'Wave Phenomena',
         exercises: [
           { id: 'Notes', code: 'Notes', fullMark: 100 },
           { id: 'Classwork', code: 'Classwork', fullMark: 100 },
-          { id: 'DSEMC', code: 'DSEMC', fullMark:118},
-          { id: 'DSELQ', code: 'DSELQ', fullMark:224}
+          { id: 'DSEMC', code: 'DSEMC', fullMark: 118 },
+          { id: 'DSELQ', code: 'DSELQ', fullMark: 224 }
         ]
       },
       {
-        id: 'mech',
+        id: 'book3t3a',
         code: 'BOOK3T3A',
-        name: 'Wave',
+        name: 'Light',
         exercises: [
           { id: 'Notes', code: 'Notes', fullMark: 100 },
           { id: 'Classwork', code: 'Classwork', fullMark: 100 },
-          { id: 'DSEMC', code: 'DSEMC', fullMark:98},
-          { id: 'DSELQ', code: 'DSELQ', fullMark:116}
+          { id: 'DSEMC', code: 'DSEMC', fullMark: 98 },
+          { id: 'DSELQ', code: 'DSELQ', fullMark: 116 }
         ]
       },
       {
-        id: 'mech',
+        id: 'book3t3b',
         code: 'BOOK3T3B',
-        name: 'Wave',
+        name: 'Sound',
         exercises: [
           { id: 'Notes', code: 'Notes', fullMark: 100 },
           { id: 'Classwork', code: 'Classwork', fullMark: 100 },
-          { id: 'DSEMC', code: 'DSEMC', fullMark:92},
-          { id: 'DSELQ', code: 'DSELQ', fullMark:136}
+          { id: 'DSEMC', code: 'DSEMC', fullMark: 92 },
+          { id: 'DSELQ', code: 'DSELQ', fullMark: 136 }
         ]
       },
       {
-        id: 'mech',
+        id: 'book3t4',
         code: 'BOOK3T4',
-        name: 'Wave',
+        name: 'reflexion',
         exercises: [
           { id: 'Notes', code: 'Notes', fullMark: 100 },
           { id: 'Classwork', code: 'Classwork', fullMark: 100 },
-          { id: 'DSEMC', code: 'DSEMC', fullMark:13},
-          { id: 'DSELQ', code: 'DSELQ', fullMark:18}
+          { id: 'DSEMC', code: 'DSEMC', fullMark: 13 },
+          { id: 'DSELQ', code: 'DSELQ', fullMark: 18 }
         ]
       },
       {
-        id: 'mech',
+        id: 'book3t5',
         code: 'BOOK3T5',
-        name: 'Wave',
+        name: 'refraction',
         exercises: [
           { id: 'Notes', code: 'Notes', fullMark: 100 },
           { id: 'Classwork', code: 'Classwork', fullMark: 100 },
-          { id: 'DSEMC', code: 'DSEMC', fullMark:59},
-          { id: 'DSELQ', code: 'DSELQ', fullMark:149}
+          { id: 'DSEMC', code: 'DSEMC', fullMark: 59 },
+          { id: 'DSELQ', code: 'DSELQ', fullMark: 149 }
         ]
       },
-      
       {
-        id: 'mech',
+        id: 'book3t6',
         code: 'BOOK3T6',
-        name: 'Wave',
+        name: 'lenses',
         exercises: [
           { id: 'Notes', code: 'Notes', fullMark: 100 },
           { id: 'Classwork', code: 'Classwork', fullMark: 100 },
-          { id: 'DSEMC', code: 'DSEMC', fullMark:99},
-          { id: 'DSELQ', code: 'DSELQ', fullMark:282}
+          { id: 'DSEMC', code: 'DSEMC', fullMark: 99 },
+          { id: 'DSELQ', code: 'DSELQ', fullMark: 282 }
         ]
-      },
+      }
     ]
   },
   {
@@ -290,138 +288,137 @@ const PLANNING_DATA = [
     name: 'Chemistry',
     topics: [
       {
-        id:'ACID and BASES',
-        code:'Ch.14',
-        name:'ACID and BASES',
-        exercises:[
-          {id:'Book Chapter Exercise',code:'Book Ch. Exe',fullMark:100},
-          {id:'Book Exam Practice',code:'Book EP',fullMark:100},
-          {id:'Question Bank',code:'QB',fullMark:500},
-          {id:'DSEMC',code:'DSEMC',fullMark:200},
-          {id:'DSELQ',code:'DSELQ',fullMark:200}
+        id: 'ch14',
+        code: 'Ch.14',
+        name: 'Acid and Bases',
+        exercises: [
+          { id: 'Book Chapter Exercise', code: 'Book Ch. Exe', fullMark: 100 },
+          { id: 'Book Exam Practice', code: 'Book EP', fullMark: 100 },
+          { id: 'Question Bank', code: 'QB', fullMark: 500 },
+          { id: 'DSEMC', code: 'DSEMC', fullMark: 200 },
+          { id: 'DSELQ', code: 'DSELQ', fullMark: 200 }
         ]
       },
       {
-        id:'ACID and BASES',
-        code:'Ch.15',
-        name:'ACID and BASES',
-        exercises:[
-          {id:'Book Chapter Exercise',code:'Book Ch. Exe',fullMark:100},
-          {id:'Book Exam Practice',code:'Book EP',fullMark:100},
-          {id:'Question Bank',code:'QB',fullMark:500},
-          {id:'DSEMC',code:'DSEMC',fullMark:200},
-          {id:'DSELQ',code:'DSELQ',fullMark:200}
+        id: 'ch15',
+        code: 'Ch.15',
+        name: 'Acid and Bases',
+        exercises: [
+          { id: 'Book Chapter Exercise', code: 'Book Ch. Exe', fullMark: 100 },
+          { id: 'Book Exam Practice', code: 'Book EP', fullMark: 100 },
+          { id: 'Question Bank', code: 'QB', fullMark: 500 },
+          { id: 'DSEMC', code: 'DSEMC', fullMark: 200 },
+          { id: 'DSELQ', code: 'DSELQ', fullMark: 200 }
         ]
       },
       {
-        id:'ACID and BASES',
-        code:'Ch.16',
-        name:'ACID and BASES',
-        exercises:[
-          {id:'Book Chapter Exercise',code:'Book Ch. Exe',fullMark:100},
-          {id:'Book Exam Practice',code:'Book EP',fullMark:100},
-          {id:'Question Bank',code:'QB',fullMark:500},
-          {id:'DSEMC',code:'DSEMC',fullMark:200},
-          {id:'DSELQ',code:'DSELQ',fullMark:200}
+        id: 'ch16',
+        code: 'Ch.16',
+        name: 'Acid and Bases',
+        exercises: [
+          { id: 'Book Chapter Exercise', code: 'Book Ch. Exe', fullMark: 100 },
+          { id: 'Book Exam Practice', code: 'Book EP', fullMark: 100 },
+          { id: 'Question Bank', code: 'QB', fullMark: 500 },
+          { id: 'DSEMC', code: 'DSEMC', fullMark: 200 },
+          { id: 'DSELQ', code: 'DSELQ', fullMark: 200 }
         ]
       },
       {
-        id:'ACID and BASES',
-        code:'Ch.17',
-        name:'ACID and BASES',
-        exercises:[
-          {id:'Book Chapter Exercise',code:'Book Ch. Exe',fullMark:100},
-          {id:'Book Exam Practice',code:'Book EP',fullMark:100},
-          {id:'Question Bank',code:'QB',fullMark:500},
-          {id:'DSEMC',code:'DSEMC',fullMark:200},
-          {id:'DSELQ',code:'DSELQ',fullMark:200}
+        id: 'ch17',
+        code: 'Ch.17',
+        name: 'Acid and Bases',
+        exercises: [
+          { id: 'Book Chapter Exercise', code: 'Book Ch. Exe', fullMark: 100 },
+          { id: 'Book Exam Practice', code: 'Book EP', fullMark: 100 },
+          { id: 'Question Bank', code: 'QB', fullMark: 500 },
+          { id: 'DSEMC', code: 'DSEMC', fullMark: 200 },
+          { id: 'DSELQ', code: 'DSELQ', fullMark: 200 }
         ]
       },
       {
-        id:'ACID and BASES',
-        code:'Ch.18',
-        name:'ACID and BASES',
-        exercises:[
-          {id:'Book Chapter Exercise',code:'Book Ch. Exe',fullMark:100},
-          {id:'Book Exam Practice',code:'Book EP',fullMark:100},
-          {id:'Question Bank',code:'QB',fullMark:500},
-          {id:'DSEMC',code:'DSEMC',fullMark:200},
-          {id:'DSELQ',code:'DSELQ',fullMark:200}
+        id: 'ch18',
+        code: 'Ch.18',
+        name: 'Acid and Bases',
+        exercises: [
+          { id: 'Book Chapter Exercise', code: 'Book Ch. Exe', fullMark: 100 },
+          { id: 'Book Exam Practice', code: 'Book EP', fullMark: 100 },
+          { id: 'Question Bank', code: 'QB', fullMark: 500 },
+          { id: 'DSEMC', code: 'DSEMC', fullMark: 200 },
+          { id: 'DSELQ', code: 'DSELQ', fullMark: 200 }
         ]
       },
       {
-        id:'ACID and BASES',
-        code:'Ch.19',
-        name:'ACID and BASES',
-        exercises:[
-          {id:'Book Chapter Exercise',code:'Book Ch. Exe',fullMark:100},
-          {id:'Book Exam Practice',code:'Book EP',fullMark:100},
-          {id:'Question Bank',code:'QB',fullMark:500},
-          {id:'DSEMC',code:'DSEMC',fullMark:200},
-          {id:'DSELQ',code:'DSELQ',fullMark:200}
+        id: 'ch19',
+        code: 'Ch.19',
+        name: 'Acid and Bases',
+        exercises: [
+          { id: 'Book Chapter Exercise', code: 'Book Ch. Exe', fullMark: 100 },
+          { id: 'Book Exam Practice', code: 'Book EP', fullMark: 100 },
+          { id: 'Question Bank', code: 'QB', fullMark: 500 },
+          { id: 'DSEMC', code: 'DSEMC', fullMark: 200 },
+          { id: 'DSELQ', code: 'DSELQ', fullMark: 200 }
         ]
       },
       {
-        id:'ACID and BASES',
-        code:'Ch.28',
-        name:'ACID and BASES',
-        exercises:[
-          {id:'Book Chapter Exercise',code:'Book Ch. Exe',fullMark:100},
-          {id:'Book Exam Practice',code:'Book EP',fullMark:100},
-          {id:'Question Bank',code:'QB',fullMark:500},
-          {id:'DSEMC',code:'DSEMC',fullMark:200},
-          {id:'DSELQ',code:'DSELQ',fullMark:200}
+        id: 'ch28',
+        code: 'Ch.28',
+        name: 'Acid and Bases',
+        exercises: [
+          { id: 'Book Chapter Exercise', code: 'Book Ch. Exe', fullMark: 100 },
+          { id: 'Book Exam Practice', code: 'Book EP', fullMark: 100 },
+          { id: 'Question Bank', code: 'QB', fullMark: 500 },
+          { id: 'DSEMC', code: 'DSEMC', fullMark: 200 },
+          { id: 'DSELQ', code: 'DSELQ', fullMark: 200 }
         ]
       },
       {
-        id:'ACID and BASES',
-        code:'Ch.29',
-        name:'ACID and BASES',
-        exercises:[
-          {id:'Book Chapter Exercise',code:'Book Ch. Exe',fullMark:100},
-          {id:'Book Exam Practice',code:'Book EP',fullMark:100},
-          {id:'Question Bank',code:'QB',fullMark:500},
-          {id:'DSEMC',code:'DSEMC',fullMark:200},
-          {id:'DSELQ',code:'DSELQ',fullMark:200}
+        id: 'ch29',
+        code: 'Ch.29',
+        name: 'Acid and Bases',
+        exercises: [
+          { id: 'Book Chapter Exercise', code: 'Book Ch. Exe', fullMark: 100 },
+          { id: 'Book Exam Practice', code: 'Book EP', fullMark: 100 },
+          { id: 'Question Bank', code: 'QB', fullMark: 500 },
+          { id: 'DSEMC', code: 'DSEMC', fullMark: 200 },
+          { id: 'DSELQ', code: 'DSELQ', fullMark: 200 }
         ]
       },
       {
-        id:'ACID and BASES',
-        code:'Ch.30',
-        name:'ACID and BASES',
-        exercises:[
-          {id:'Book Chapter Exercise',code:'Book Ch. Exe',fullMark:100},
-          {id:'Book Exam Practice',code:'Book EP',fullMark:100},
-          {id:'Question Bank',code:'QB',fullMark:500},
-          {id:'DSEMC',code:'DSEMC',fullMark:200},
-          {id:'DSELQ',code:'DSELQ',fullMark:200}
+        id: 'ch30',
+        code: 'Ch.30',
+        name: 'Acid and Bases',
+        exercises: [
+          { id: 'Book Chapter Exercise', code: 'Book Ch. Exe', fullMark: 100 },
+          { id: 'Book Exam Practice', code: 'Book EP', fullMark: 100 },
+          { id: 'Question Bank', code: 'QB', fullMark: 500 },
+          { id: 'DSEMC', code: 'DSEMC', fullMark: 200 },
+          { id: 'DSELQ', code: 'DSELQ', fullMark: 200 }
         ]
       },
       {
-        id:'ACID and BASES',
-        code:'Ch.31',
-        name:'ACID and BASES',
-        exercises:[
-          {id:'Book Chapter Exercise',code:'Book Ch. Exe',fullMark:100},
-          {id:'Book Exam Practice',code:'Book EP',fullMark:100},
-          {id:'Question Bank',code:'QB',fullMark:500},
-          {id:'DSEMC',code:'DSEMC',fullMark:200},
-          {id:'DSELQ',code:'DSELQ',fullMark:200}
+        id: 'ch31',
+        code: 'Ch.31',
+        name: 'Acid and Bases',
+        exercises: [
+          { id: 'Book Chapter Exercise', code: 'Book Ch. Exe', fullMark: 100 },
+          { id: 'Book Exam Practice', code: 'Book EP', fullMark: 100 },
+          { id: 'Question Bank', code: 'QB', fullMark: 500 },
+          { id: 'DSEMC', code: 'DSEMC', fullMark: 200 },
+          { id: 'DSELQ', code: 'DSELQ', fullMark: 200 }
         ]
       },
       {
-        id:'ACID and BASES',
-        code:'Ch.32',
-        name:'ACID and BASES',
-        exercises:[
-          {id:'Book Chapter Exercise',code:'Book Ch. Exe',fullMark:100},
-          {id:'Book Exam Practice',code:'Book EP',fullMark:100},
-          {id:'Question Bank',code:'QB',fullMark:500},
-          {id:'DSEMC',code:'DSEMC',fullMark:200},
-          {id:'DSELQ',code:'DSELQ',fullMark:200}
+        id: 'ch32',
+        code: 'Ch.32',
+        name: 'Acid and Bases',
+        exercises: [
+          { id: 'Book Chapter Exercise', code: 'Book Ch. Exe', fullMark: 100 },
+          { id: 'Book Exam Practice', code: 'Book EP', fullMark: 100 },
+          { id: 'Question Bank', code: 'QB', fullMark: 500 },
+          { id: 'DSEMC', code: 'DSEMC', fullMark: 200 },
+          { id: 'DSELQ', code: 'DSELQ', fullMark: 200 }
         ]
-      },
-      
+      }
     ]
   }
 ];
