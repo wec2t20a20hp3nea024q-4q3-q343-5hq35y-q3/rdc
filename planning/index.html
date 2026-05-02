@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RDC - Planning</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="planning.css">
+</head>
+<body class="planning-body">
+    <!-- Top Bar (exactly like index) -->
+    <header class="topbar">
+        <div class="topbar-left">
+            <span class="brand-name"><a href="../index.html">RDC</a></span>
+        </div>
+        <div class="topbar-right">
+            <div class="user-menu" id="userMenu">
+                <span class="username-display" id="usernameDisplay">
+                    <span class="user-icon">👤</span>
+                    <span id="currentUsername">User</span>
+                    <span class="dropdown-arrow">▾</span>
+                </span>
+                <div class="logout-dropdown" id="logoutDropdown">
+                    <button class="logout-btn" id="logoutBtn">Logout</button>
+                </div>
+            </div>
+            <div class="clock" id="clock">
+                <span class="clock-time" id="clockTime">00:00:00</span>
+                <span class="clock-tz">GMT+8</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Original Sidebar (leftmost) -->
+    <aside class="sidebar" id="sidebar">
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="../dashboard/index.html" class="sidebar-link">Dashboard</a></li>
+                <li><a href="../oj/index.html" class="sidebar-link">Online Judge</a></li>
+                <li><a href="../planning/index.html" class="sidebar-link active">Planning</a></li>
+                <li><a href="#" class="sidebar-link">👥 Team</a></li>
+                <li><a href="#" class="sidebar-link">📁 Documents</a></li>
+                <li><a href="#" class="sidebar-link">📅 Calendar</a></li>
+                <li><a href="#" class="sidebar-link">💬 Messages</a></li>
+                <li><a href="#" class="sidebar-link">⚙️ Settings</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Subject Sidebar (second) -->
+    <aside class="subject-sidebar" id="subjectSidebar">
+        <div class="subject-sidebar-header">Subjects</div>
+        <nav id="subjectNav">
+            <!-- filled by JS -->
+        </nav>
+        <div class="highlight-input-area">
+            <input type="text" id="highlightInput" placeholder="MATH:ALG, PHY:MECH">
+            <button id="highlightApplyBtn">Apply</button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <div class="planning-container">
+            <div class="planning-toolbar">
+                <button id="toggleAllExercisesBtn" class="toolbar-btn">📦 Hide All Exercises</button>
+            </div>
+            <div class="topics-grid" id="topicsGrid">
+                <!-- JS populated: each topic becomes a column -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Mobile sidebar toggle (original sidebar) -->
+    <button class="sidebar-toggle" id="sidebarToggle" title="Toggle Sidebar">☰</button>
+
+    <script src="../auth.js"></script>
+    <script src="planning-data.js"></script>
+    <script src="planning.js"></script>
+</body>
+</html>
