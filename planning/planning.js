@@ -1,4 +1,4 @@
-// planning.js - Interactive Grid View with Persistent Subject Selection
+// planning.js - Interactive Grid View with Persistent Subject Selection & Unique Storage Keys
 
 (function() {
     if (!isLoggedIn()) {
@@ -63,6 +63,8 @@
 
     // ── Data helpers ─────────────────────────
     function getExerciseInfo(exerciseId) {
+        // This is now unreliable for duplicates; we'll rely on data attributes instead.
+        // But kept for other uses; not used for score/finished since we'll use unique key from block.
         for (let subj of PLANNING_DATA) {
             for (let topic of subj.topics) {
                 const ex = topic.exercises.find(e => e.id === exerciseId);
@@ -72,19 +74,32 @@
         return null;
     }
 
-    function getStoredScore(exId) {
-        const val = localStorage.getItem(`plan_score_${exId}`);
+    // ── Unique key generation ───────────────
+    function getScoreKey(subjectId, topicId, exerciseId) {
+        return `plan_score_${subjectId}_${topicId}_${exerciseId}`;
+    }
+
+    function getFinishedKey(subjectId, topicId, exerciseId) {
+        return `plan_finished_${subjectId}_${topicId}_${exerciseId}`;
+    }
+
+    function getStoredScore(subjectId, topicId, exerciseId) {
+        const val = localStorage.getItem(getScoreKey(subjectId, topicId, exerciseId));
         return val !== null ? Number(val) : null;
     }
-    function setStoredScore(exId, score) {
-        if (score === null || isNaN(score)) localStorage.removeItem(`plan_score_${exId}`);
-        else localStorage.setItem(`plan_score_${exId}`, score);
+
+    function setStoredScore(subjectId, topicId, exerciseId, score) {
+        const key = getScoreKey(subjectId, topicId, exerciseId);
+        if (score === null || isNaN(score)) localStorage.removeItem(key);
+        else localStorage.setItem(key, score);
     }
-    function getFinished(exId) {
-        return localStorage.getItem(`plan_finished_${exId}`) === 'true';
+
+    function getFinished(subjectId, topicId, exerciseId) {
+        return localStorage.getItem(getFinishedKey(subjectId, topicId, exerciseId)) === 'true';
     }
-    function setFinished(exId, finished) {
-        localStorage.setItem(`plan_finished_${exId}`, finished);
+
+    function setFinished(subjectId, topicId, exerciseId, finished) {
+        localStorage.setItem(getFinishedKey(subjectId, topicId, exerciseId), finished);
     }
 
     // ── Subject Sidebar ─────────────────────
@@ -104,7 +119,6 @@
 
     function selectSubject(subjectId) {
         currentSubjectId = subjectId;
-        // Save to localStorage
         localStorage.setItem(SUBJECT_STORAGE_KEY, subjectId);
         renderSubjectSidebar();
         renderTopicsGrid();
@@ -114,15 +128,15 @@
     const topicsGrid = document.getElementById('topicsGrid');
     const toggleBtn = document.getElementById('toggleAllExercisesBtn');
 
-    function calculateTopicPercentage(topicId) {
-        const subject = PLANNING_DATA.find(s => s.id === currentSubjectId);
+    function calculateTopicPercentage(subjectId, topicId) {
+        const subject = PLANNING_DATA.find(s => s.id === subjectId);
         if (!subject) return 0;
         const topic = subject.topics.find(t => t.id === topicId);
         if (!topic) return 0;
         let total = 0, achieved = 0;
         topic.exercises.forEach(ex => {
             total += ex.fullMark;
-            const score = getStoredScore(ex.id);
+            const score = getStoredScore(subjectId, topicId, ex.id);
             if (score !== null && !isNaN(score)) {
                 achieved += Math.min(score, ex.fullMark);
             }
@@ -130,10 +144,10 @@
         return total > 0 ? (achieved / total) * 100 : 0;
     }
 
-    function updateTopicPercentage(topicId) {
+    function updateTopicPercentage(subjectId, topicId) {
         const column = document.querySelector(`.topic-column[data-topic-id="${topicId}"]`);
         if (!column) return;
-        const percent = calculateTopicPercentage(topicId);
+        const percent = calculateTopicPercentage(subjectId, topicId);
         const percentEl = column.querySelector('.topic-percent');
         if (percentEl) {
             percentEl.textContent = Math.round(percent) + '%';
@@ -157,8 +171,10 @@
         let html = '';
         subject.topics.forEach(topic => {
             const isHighlighted = highlightedTopics.has(topic.id);
-            const allFinished = topic.exercises.every(ex => getFinished(ex.id));
-            const percentage = calculateTopicPercentage(topic.id);
+            const allFinished = topic.exercises.every(ex =>
+                getFinished(subject.id, topic.id, ex.id)
+            );
+            const percentage = calculateTopicPercentage(subject.id, topic.id);
             let headerClasses = 'topic-header';
             if (isHighlighted) {
                 headerClasses += ' highlighted';
@@ -177,7 +193,7 @@
                         <span class="topic-percent">${Math.round(percentage)}%</span>
                     </div>
                     <div class="topic-exercises${allExercisesHidden ? ' collapsed' : ''}">
-                        ${topic.exercises.map(ex => renderExerciseBlock(ex, topic.id)).join('')}
+                        ${topic.exercises.map(ex => renderExerciseBlock(ex, subject.id, topic.id)).join('')}
                     </div>
                 </div>
             `;
@@ -190,9 +206,9 @@
             const scoreInput = block.querySelector('.score-input');
             const toggleFinishBtn = block.querySelector('.toggle-btn');
             const exerciseId = block.dataset.exerciseId;
-            const info = getExerciseInfo(exerciseId);
-            if (!info) return;
-            const fullMark = info.exercise.fullMark;
+            const subjectId = block.dataset.subjectId;
+            const topicId = block.dataset.topicId;
+            const fullMark = parseFloat(block.dataset.fullMark);
 
             header.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -202,27 +218,27 @@
             scoreInput.addEventListener('input', (e) => {
                 const val = parseFloat(e.target.value);
                 if (!isNaN(val) && val >= 0) {
-                    setStoredScore(exerciseId, val);
+                    setStoredScore(subjectId, topicId, exerciseId, val);
                 } else if (e.target.value === '') {
-                    setStoredScore(exerciseId, null);
+                    setStoredScore(subjectId, topicId, exerciseId, null);
                 } else {
-                    e.target.value = getStoredScore(exerciseId) || '';
+                    e.target.value = getStoredScore(subjectId, topicId, exerciseId) || '';
                 }
-                updateExerciseVisual(block, exerciseId, fullMark, getFinished(exerciseId));
-                updateTopicHighlight(exerciseId);
-                updateTopicPercentage(info.topicId);
+                updateExerciseVisual(block, subjectId, topicId, exerciseId, fullMark, getFinished(subjectId, topicId, exerciseId));
+                updateTopicHighlight(subjectId, topicId);
+                updateTopicPercentage(subjectId, topicId);
             });
 
             toggleFinishBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                const currentState = getFinished(exerciseId);
+                const currentState = getFinished(subjectId, topicId, exerciseId);
                 const newState = !currentState;
-                setFinished(exerciseId, newState);
+                setFinished(subjectId, topicId, exerciseId, newState);
 
                 if (newState) {
-                    const currentScore = getStoredScore(exerciseId);
+                    const currentScore = getStoredScore(subjectId, topicId, exerciseId);
                     if (currentScore === null || currentScore === 0) {
-                        setStoredScore(exerciseId, fullMark);
+                        setStoredScore(subjectId, topicId, exerciseId, fullMark);
                         scoreInput.value = fullMark;
                     }
                 }
@@ -230,16 +246,16 @@
                 toggleFinishBtn.textContent = newState ? '✓ Done' : '⏺ Pending';
                 toggleFinishBtn.classList.toggle('on', newState);
                 toggleFinishBtn.classList.toggle('off', !newState);
-                updateExerciseVisual(block, exerciseId, fullMark, newState);
-                updateTopicHighlight(exerciseId);
-                updateTopicPercentage(info.topicId);
+                updateExerciseVisual(block, subjectId, topicId, exerciseId, fullMark, newState);
+                updateTopicHighlight(subjectId, topicId);
+                updateTopicPercentage(subjectId, topicId);
             });
         });
     }
 
-    function renderExerciseBlock(ex, topicId) {
-        const storedScore = getStoredScore(ex.id);
-        const finished = getFinished(ex.id);
+    function renderExerciseBlock(ex, subjectId, topicId) {
+        const storedScore = getStoredScore(subjectId, topicId, ex.id);
+        const finished = getFinished(subjectId, topicId, ex.id);
         const fullMark = ex.fullMark;
         const scorePercent = (storedScore !== null && fullMark > 0) ? (storedScore / fullMark) * 100 : null;
         let colorClass = '';
@@ -250,7 +266,11 @@
         }
         const finishedClass = finished ? 'finished-outline' : '';
         return `
-            <div class="exercise-block ${colorClass} ${finishedClass}" data-exercise-id="${ex.id}">
+            <div class="exercise-block ${colorClass} ${finishedClass}"
+                 data-exercise-id="${ex.id}"
+                 data-subject-id="${subjectId}"
+                 data-topic-id="${topicId}"
+                 data-full-mark="${ex.fullMark}">
                 <div class="exercise-header">
                     <span class="exercise-code">${ex.code}</span>
                     <span class="expand-icon">▾</span>
@@ -271,8 +291,8 @@
         `;
     }
 
-    function updateExerciseVisual(block, exId, fullMark, finished) {
-        const storedScore = getStoredScore(exId);
+    function updateExerciseVisual(block, subjectId, topicId, exerciseId, fullMark, finished) {
+        const storedScore = getStoredScore(subjectId, topicId, exerciseId);
         const scorePercent = (storedScore !== null && fullMark > 0) ? (storedScore / fullMark) * 100 : null;
         block.classList.remove('score-red', 'score-yellow', 'score-green');
         if (scorePercent !== null) {
@@ -284,18 +304,16 @@
         else block.classList.remove('finished-outline');
     }
 
-    function updateTopicHighlight(exerciseId) {
-        const info = getExerciseInfo(exerciseId);
-        if (!info) return;
-        const topicColumn = document.querySelector(`.topic-column[data-topic-id="${info.topicId}"]`);
+    function updateTopicHighlight(subjectId, topicId) {
+        const topicColumn = document.querySelector(`.topic-column[data-topic-id="${topicId}"]`);
         if (!topicColumn) return;
-        const subject = PLANNING_DATA.find(s => s.id === currentSubjectId);
+        const subject = PLANNING_DATA.find(s => s.id === subjectId);
         if (!subject) return;
-        const topic = subject.topics.find(t => t.id === info.topicId);
+        const topic = subject.topics.find(t => t.id === topicId);
         if (!topic) return;
-        const allFinished = topic.exercises.every(ex => getFinished(ex.id));
+        const allFinished = topic.exercises.every(ex => getFinished(subjectId, topicId, ex.id));
         const header = topicColumn.querySelector('.topic-header');
-        if (highlightedTopics.has(info.topicId)) {
+        if (highlightedTopics.has(topicId)) {
             header.classList.add('highlighted');
             if (allFinished) {
                 header.classList.add('highlighted-finished');
@@ -362,7 +380,6 @@
 
     // ── Initialize ────────────────────────────
     function initializeSubject() {
-        // Try to load stored subject ID, otherwise default to first subject
         const storedSubjectId = localStorage.getItem(SUBJECT_STORAGE_KEY);
         const validSubject = PLANNING_DATA.find(s => s.id === storedSubjectId);
         if (validSubject) {
@@ -373,5 +390,5 @@
     }
 
     renderSubjectSidebar();
-    initializeSubject();   // uses stored subject if available
+    initializeSubject();
 })();
