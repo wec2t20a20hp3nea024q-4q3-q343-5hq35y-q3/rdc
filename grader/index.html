@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RDC - PhO & IMO Prelim Papers</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="grader.css">
+</head>
+<body class="grader-body">
+    <!-- Top Bar -->
+    <header class="topbar">
+        <div class="topbar-left">
+            <span class="brand-name"><a href="../index.html">RDC</a></span>
+        </div>
+        <div class="topbar-right">
+            <div class="user-menu" id="userMenu">
+                <span class="username-display" id="usernameDisplay">
+                    <span class="user-icon">👤</span>
+                    <span id="currentUsername">User</span>
+                    <span class="dropdown-arrow">▾</span>
+                </span>
+                <div class="logout-dropdown" id="logoutDropdown">
+                    <button class="logout-btn" id="logoutBtn">Logout</button>
+                </div>
+            </div>
+            <div class="clock" id="clock">
+                <span class="clock-time" id="clockTime">00:00:00</span>
+                <span class="clock-tz">GMT+8</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="../dashboard/index.html" class="sidebar-link">Dashboard</a></li>
+                <li><a href="../oj/index.html" class="sidebar-link">Online Judge (Not available)</a></li>
+                <li><a href="../planning/index.html" class="sidebar-link">Revision Plans</a></li>
+                <li><a href="../grader/index.html" class="sidebar-link active">PhO and IMO Prelim</a></li>
+                <li><a href="#" class="sidebar-link">Documents (Not available)</a></li>
+                <li><a href="#" class="sidebar-link">Calendar (Not available)</a></li>
+                <li><a href="#" class="sidebar-link">Messages (Not available)</a></li>
+                <li><a href="#" class="sidebar-link">Settings (Not available)</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <div class="grader-panel">
+            <h1>PhO & IMO Prelim Papers</h1>
+
+            <div class="grader-controls">
+                <div class="control-group">
+                    <label for="typeSelect">Subject:</label>
+                    <select id="typeSelect">
+                        <option value="">-- Choose --</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="yearSelect">Year:</label>
+                    <select id="yearSelect">
+                        <option value="">-- Choose --</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="previewContainer" class="preview-container">
+                <!-- Dynamically filled with two PDF previews -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Mobile sidebar toggle -->
+    <button class="sidebar-toggle" id="sidebarToggle" title="Toggle Sidebar">☰</button>
+
+    <script src="../auth.js"></script>
+    <script src="grader-data.js"></script>
+    <script src="grader.js"></script>
+</body>
+</html>
