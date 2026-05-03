@@ -10,6 +10,10 @@
 .main-content {
     padding: 24px 28px;
     box-sizing: border-box;
+    /* Let the main content grow to fill space */
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - var(--topbar-height));
 }
 
 .grader-panel {
@@ -17,6 +21,9 @@
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
     padding: 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .grader-controls {
@@ -24,9 +31,10 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 16px;
-    margin-bottom: 28px;
+    margin-bottom: 16px;
     padding-bottom: 16px;
     border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
 }
 
 .control-group {
@@ -51,7 +59,8 @@
 .preview-container {
     display: flex;
     gap: 24px;
-    min-height: 60vh;
+    flex: 1;
+    min-height: 0;             /* allow flex children to shrink */
 }
 
 .preview-column {
@@ -73,6 +82,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-shrink: 0;
 }
 
 .preview-header a {
@@ -84,15 +94,10 @@
     text-decoration: underline;
 }
 
-.preview-header .download-icon {
-    font-size: 1.2rem;
-}
-
 .preview-frame {
     flex: 1;
     border: none;
     width: 100%;
-    min-height: 500px;
     background: #fff;
 }
 
@@ -107,18 +112,20 @@
     .grader-body {
         padding-left: 0;
     }
-    .sidebar {
-        transform: translateX(-100%);
-    }
-    .sidebar.open {
-        transform: translateX(0);
-    }
+
     .main-content {
         padding: 12px;
     }
+
     .preview-container {
         flex-direction: column;
     }
+
+    .preview-column {
+        /* Let JavaScript set the height, but provide a fallback */
+        min-height: 300px;
+    }
+
     .grader-controls {
         flex-direction: column;
         align-items: flex-start;
