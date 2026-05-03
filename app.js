@@ -1,158 +1,158 @@
-// ========================================
-// app.js - Main Application (Index Page)
-// ========================================
+// app.js - Universal top bar, sidebar toggle, clock, user menu
 
-document.addEventListener('DOMContentLoaded', function () {
+(function() {
     // ── Require Authentication ──────────────
-    // (Double-check in case auth.js auto-run missed it)
-    if (!isLoggedIn()) {
+    if (typeof isLoggedIn === 'function' && !isLoggedIn()) {
         window.location.href = 'login.html';
         return;
     }
 
     // ── Get Current User ────────────────────
-    const currentUser = getCurrentUser();
-    const displayName = currentUser ? currentUser.displayName : 'User';
+    let displayName = 'User';
+    if (typeof getCurrentUser === 'function') {
+        const user = getCurrentUser();
+        if (user && user.displayName) displayName = user.displayName;
+    }
 
-    // ── DOM Elements ────────────────────────
-    const usernameDisplay = document.getElementById('currentUsername');
-    const userMenu = document.getElementById('userMenu');
-    const logoutDropdown = document.getElementById('logoutDropdown');
-    const logoutBtn = document.getElementById('logoutBtn');
-    const clockTime = document.getElementById('clockTime');
-    const currentDateEl = document.getElementById('currentDate');
-    const sidebarToggle = document.getElementById('sidebarToggle');
-    const sidebar = document.getElementById('sidebar');
-    const sidebarLinks = document.querySelectorAll('.sidebar-link');
+    // ── DOM Elements (safe query) ──────────
+    function safeId(id) { return document.getElementById(id); }
+
+    const usernameEl = safeId('currentUsername');
+    const clockEl = safeId('clockTime');
+    const userMenu = safeId('userMenu');
+    const logoutBtn = safeId('logoutBtn');
+    const sidebar = safeId('sidebar');
+    const topbarLeft = document.querySelector('.topbar-left');
 
     // ── Set Username ────────────────────────
-    if (usernameDisplay) {
-        usernameDisplay.textContent = displayName;
-    }
-
-    // ── Set Current Date ────────────────────
-    function updateDateDisplay() {
-        if (currentDateEl) {
-            const now = new Date();
-            const gmt8 = getGMT8Date(now);
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            currentDateEl.textContent = gmt8.toLocaleDateString('en-US', options);
-        }
-    }
-    updateDateDisplay();
+    if (usernameEl) usernameEl.textContent = displayName;
 
     // ── GMT+8 Clock ─────────────────────────
     function getGMT8Date(date) {
-        // Convert local date to GMT+8
         const utc = date.getTime() + (date.getTimezoneOffset() * 60000);
         return new Date(utc + (8 * 3600000));
     }
 
     function updateClock() {
-        if (clockTime) {
-            const now = new Date();
-            const gmt8 = getGMT8Date(now);
-            const hours = String(gmt8.getHours()).padStart(2, '0');
-            const minutes = String(gmt8.getMinutes()).padStart(2, '0');
-            const seconds = String(gmt8.getSeconds()).padStart(2, '0');
-            clockTime.textContent = `${hours}:${minutes}:${seconds}`;
-        }
+        if (!clockEl) return;
+        const gmt8 = getGMT8Date(new Date());
+        const time = [gmt8.getHours(), gmt8.getMinutes(), gmt8.getSeconds()]
+            .map(v => String(v).padStart(2, '0')).join(':');
+        clockEl.textContent = time;
     }
     updateClock();
-    setInterval(updateClock, 1000);
+    setInterval(updateClock, 500);
 
     // ── User Menu Dropdown ──────────────────
-    if (userMenu && logoutDropdown) {
-        // Toggle dropdown on username click
-        userMenu.addEventListener('click', function (e) {
+    if (userMenu) {
+        userMenu.addEventListener('click', e => {
             e.stopPropagation();
             userMenu.classList.toggle('open');
         });
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function (e) {
-            if (!userMenu.contains(e.target)) {
-                userMenu.classList.remove('open');
-            }
+        document.addEventListener('click', e => {
+            if (!userMenu.contains(e.target)) userMenu.classList.remove('open');
         });
-
-        // Close dropdown on Escape key
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape') {
-                userMenu.classList.remove('open');
-            }
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') userMenu.classList.remove('open');
         });
     }
 
     // ── Logout ──────────────────────────────
     if (logoutBtn) {
-        logoutBtn.addEventListener('click', function (e) {
+        logoutBtn.addEventListener('click', e => {
             e.stopPropagation();
-            logout();
-            window.location.href = 'login.html';
+            if (typeof logout === 'function') logout();
+            window.location.href = '../login.html';
         });
     }
 
-    // ── Sidebar Link Active State ───────────
-    sidebarLinks.forEach(link => {
-        link.addEventListener('click', function (e) {
-            // Remove active class from all links
-            sidebarLinks.forEach(l => l.classList.remove('active'));
-            // Add active class to clicked link
-            this.classList.add('active');
+    // ── Sidebar Toggle (universal) ──────────
+    if (topbarLeft && sidebar) {
+        // Insert toggle button if not already present
+        let toggleBtn = document.getElementById('sidebarToggleTop');
+        if (!toggleBtn) {
+            toggleBtn = document.createElement('button');
+            toggleBtn.id = 'sidebarToggleTop';
+            toggleBtn.className = 'topbar-sidebar-toggle';
+            toggleBtn.title = 'Toggle Sidebar';
+            topbarLeft.insertBefore(toggleBtn, topbarLeft.firstChild);
+        }
 
-            // Optional: close sidebar on mobile after clicking a link
+        const body = document.body;
+
+        const setSidebarState = (open) => {
+            if (open) {
+                sidebar.classList.add('open');
+                toggleBtn.innerHTML = '✕';
+                if (window.innerWidth > 768) body.classList.remove('sidebar-closed');
+            } else {
+                sidebar.classList.remove('open');
+                toggleBtn.innerHTML = '☰';
+                if (window.innerWidth > 768) body.classList.add('sidebar-closed');
+            }
+        };
+
+        toggleBtn.addEventListener('click', () => {
+            const isOpen = sidebar.classList.contains('open');
+            setSidebarState(!isOpen);
+        });
+
+        // Initial state
+        if (window.innerWidth > 768) {
+            setSidebarState(true);   // desktop: open
+        } else {
+            setSidebarState(false);  // mobile: closed
+        }
+
+        // Resize handler
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                if (sidebar.classList.contains('open')) {
+                    body.classList.remove('sidebar-closed');
+                } else {
+                    body.classList.add('sidebar-closed');
+                }
+            } else {
+                body.classList.remove('sidebar-closed');
+            }
+        });
+
+        // Keyboard shortcut
+        document.addEventListener('keydown', e => {
+            if (e.ctrlKey && e.key === 'b') {
+                e.preventDefault();
+                setSidebarState(!sidebar.classList.contains('open'));
+            }
+        });
+    }
+
+    // ── Index-page specific (only if elements exist) ──
+    const currentDateEl = safeId('currentDate');
+    if (currentDateEl) {
+        function updateDate() {
+            const now = new Date();
+            const gmt8 = getGMT8Date(now);
+            currentDateEl.textContent = gmt8.toLocaleDateString('en-US', {
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+            });
+        }
+        updateDate();
+    }
+
+    // Sidebar link active style (works on any page)
+    const sidebarLinks = document.querySelectorAll('.sidebar-link');
+    sidebarLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            sidebarLinks.forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
+            // Close sidebar on mobile after navigation
             if (window.innerWidth <= 768 && sidebar) {
                 sidebar.classList.remove('open');
+                const btn = document.getElementById('sidebarToggleTop');
+                if (btn) btn.innerHTML = '☰';
             }
         });
     });
 
-    // ── Mobile Sidebar Toggle ───────────────
-    if (sidebarToggle && sidebar) {
-        sidebarToggle.addEventListener('click', function () {
-            sidebar.classList.toggle('open');
-        });
-
-        // Close sidebar when clicking outside on mobile
-        document.addEventListener('click', function (e) {
-            if (window.innerWidth <= 768) {
-                const clickedOutsideSidebar = !sidebar.contains(e.target);
-                const clickedToggle = sidebarToggle.contains(e.target);
-                if (clickedOutsideSidebar && !clickedToggle && sidebar.classList.contains('open')) {
-                    sidebar.classList.remove('open');
-                }
-            }
-        });
-    }
-
-    // ── Keyboard Shortcuts ──────────────────
-    document.addEventListener('keydown', function (e) {
-        // Ctrl+Shift+L to logout
-        if (e.ctrlKey && e.shiftKey && e.key === 'L') {
-            e.preventDefault();
-            logout();
-            window.location.href = 'login.html';
-        }
-        // Toggle sidebar with Ctrl+B
-        if (e.ctrlKey && e.key === 'b') {
-            e.preventDefault();
-            if (sidebar) {
-                sidebar.classList.toggle('open');
-            }
-        }
-    });
-
-    // ── Handle window resize ────────────────
-    window.addEventListener('resize', function () {
-        if (window.innerWidth > 768 && sidebar) {
-            // On desktop, ensure sidebar is visible
-            sidebar.classList.remove('open');
-        }
-    });
-
-    // ── Initialization complete ─────────────
-    console.log(`RDC Platform initialized. Welcome, ${displayName}!`);
-    console.log('Session active. Use the sidebar to navigate.');
-    console.log('Tip: Press Ctrl+Shift+L to logout, Ctrl+B to toggle sidebar.');
-});
+    console.log(`RDC Platform ready. Welcome, ${displayName}!`);
+})();
