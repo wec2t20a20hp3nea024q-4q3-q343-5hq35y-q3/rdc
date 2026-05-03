@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RDC - PhO & IMO Prelim Papers</title>
-    <link rel="stylesheet" href="../styles.css">
-    <link rel="stylesheet" href="grader.css">
+    <title>RDC - Home</title>
+    <link rel="stylesheet" href="./styles.css">
 </head>
-<body class="grader-body">
+<body class="index-body">
     <!-- Top Bar -->
     <header class="topbar">
         <div class="topbar-left">
-            <span class="brand-name"><a href="../index.html">RDC</a></span>
+            <span class="brand-name"><a href="/index.html">RDC</a></span>
         </div>
         <div class="topbar-right">
             <div class="user-menu" id="userMenu">
@@ -35,40 +34,46 @@
     <aside class="sidebar" id="sidebar">
         <nav class="sidebar-nav">
             <ul>
-                <li><a href="../dashboard/index.html" class="sidebar-link">Dashboard</a></li>
-                <li><a href="../oj/index.html" class="sidebar-link">Online Judge (Not available)</a></li>
-                <li><a href="../planning/index.html" class="sidebar-link">Revision Plans</a></li>
-                <li><a href="../grader/index.html" class="sidebar-link active">PhO and IMO Prelim</a></li>
-                <li><a href="#" class="sidebar-link">Documents (Not available)</a></li>
-                <li><a href="#" class="sidebar-link">Calendar (Not available)</a></li>
-                <li><a href="#" class="sidebar-link">Messages (Not available)</a></li>
-                <li><a href="#" class="sidebar-link">Settings (Not available)</a></li>
+                <li><a href="./dashboard/index.html" class="sidebar-link active">Dashboard</a></li>
+                <li><a href="./oj/index.html" class="sidebar-link">Online Judge(Not avaliable)</a></li>
+                <li><a href="./planning/index.html" class="sidebar-link">Revision Plans</a></li>
+                <li><a href="./grader/index.html" class="sidebar-link">PhO and IMO Prelim</a></li>
+                <li><a href="#" class="sidebar-link">Documents(Not avaliable)</a></li>
+                <li><a href="#" class="sidebar-link">Calendar(Not avaliable)</a></li>
+                <li><a href="#" class="sidebar-link">Messages(Not avaliable)</a></li>
+                <li><a href="#" class="sidebar-link">Settings(Not avalibale)</a></li>
             </ul>
         </nav>
     </aside>
 
     <!-- Main Content -->
     <main class="main-content" id="mainContent">
-        <div class="grader-panel">
-            <h1>PhO & IMO Prelim Papers</h1>
-
-            <div class="grader-controls">
-                <div class="control-group">
-                    <label for="typeSelect">Subject:</label>
-                    <select id="typeSelect">
-                        <option value="">-- Choose --</option>
-                    </select>
-                </div>
-                <div class="control-group">
-                    <label for="yearSelect">Year:</label>
-                    <select id="yearSelect">
-                        <option value="">-- Choose --</option>
-                    </select>
-                </div>
+        <div class="updates-panel">
+            <div class="updates-header">
+                <h2>Recent Updates</h2>
+                <span class="updates-date" id="currentDate"></span>
             </div>
-
-            <div id="previewContainer" class="preview-container">
-                <!-- Dynamically filled with two PDF previews -->
+            <div class="updates-body" id="updatesBody">
+                <div class="update-card">
+                    <div class="update-card-header">
+                        <span class="update-badge new">New</span>
+                        <span class="update-time">Today</span>
+                    </div>
+                    <h3>Welcome to Roll Dog Center</h3>
+                    <p>You have successfully logged in. This is the main updates area where announcements, notifications, and platform updates will appear. Use the sidebar to navigate through different sections of the platform.</p>
+                </div>
+                <div class="update-card">
+                    <div class="update-card-header">
+                        <span class="update-badge info">Info</span>
+                        <span class="update-time">2 days ago</span>
+                    </div>
+                    <h3>Website created!!!</h3>
+                    <p>The website is created on 2nd May, 2026 19:52:00 GMT+8</p>
+                </div>
+                <div class="update-card placeholder-card">
+                    <div class="placeholder-icon"></div>
+                    <p>More updates will appear here...</p>
+                </div>
             </div>
         </div>
     </main>
@@ -76,8 +81,7 @@
     <!-- Mobile sidebar toggle -->
     <button class="sidebar-toggle" id="sidebarToggle" title="Toggle Sidebar">☰</button>
 
-    <script src="../auth.js"></script>
-    <script src="grader-data.js"></script>
-    <script src="grader.js"></script>
+    <script src="auth.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
